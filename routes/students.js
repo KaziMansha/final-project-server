@@ -32,6 +32,26 @@ router.get('/', ash(async(req, res) => {
   res.status(200).json(students);  // Status code 200 OK - request succeeded
 }));
 
+router.get('/student/:id', async (req, res) => {
+  try {
+    const { id } = req.params;//get the id from the res
+    let student_info = await Student.findOne(
+      {
+        where: {//gets the student
+          id: id
+        },
+        include: [Campus]//get the campus
+      }
+    );
+    res.status(200).json({
+      success: student_info
+    });//return a error if app crashs
+  }
+  catch (error) {
+    res.status(400).json(error);//return a error if app crashs
+  }
+});
+
 /* GET STUDENT BY ID */
 router.get('/:id', ash(async(req, res) => {
   // Find student by Primary Key
