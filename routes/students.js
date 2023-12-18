@@ -24,14 +24,6 @@ const ash = require('express-async-handler');
 //   }
 // });
 
-/* GET ALL STUDENTS: async/await using express-async-handler (ash) */
-// Automatically catches any error and sends to Routing Error-Handling Middleware (app.js)
-// It is the same as using "try-catch" and calling next(error)
-router.get('/', ash(async(req, res) => {
-  let students = await Student.findAll({include: [Campus]});
-  res.status(200).json(students);  // Status code 200 OK - request succeeded
-}));
-
 router.get('/student/:id', async (req, res) => {
   try {
     const { id } = req.params;//get the id from the res
@@ -51,6 +43,14 @@ router.get('/student/:id', async (req, res) => {
     res.status(400).json(error);//return a error if app crashs
   }
 });
+
+/* GET ALL STUDENTS: async/await using express-async-handler (ash) */
+// Automatically catches any error and sends to Routing Error-Handling Middleware (app.js)
+// It is the same as using "try-catch" and calling next(error)
+router.get('/', ash(async(req, res) => {
+  let students = await Student.findAll({include: [Campus]});
+  res.status(200).json(students);  // Status code 200 OK - request succeeded
+}));
 
 /* GET STUDENT BY ID */
 router.get('/:id', ash(async(req, res) => {
