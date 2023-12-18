@@ -23,7 +23,7 @@ const Campus = db.define("campus", {
   },
 
   campusImg: {
-  type: Sequelize.TEXT("long"),
+  type: Sequelize.TEXT('long'),
   defaultValue: ""
   }
   
